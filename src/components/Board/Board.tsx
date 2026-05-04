@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { DndContext, DragOverlay, closestCenter, KeyboardSensor, PointerSensor, useSensor, useSensors } from '@dnd-kit/core';
-import { arrayMove, SortableContext, sortableKeyboardCoordinates, verticalListSortingStrategy } from '@dnd-kit/sortable';
+import { arrayMove, SortableContext, sortableKeyboardCoordinates, horizontalListSortingStrategy } from '@dnd-kit/sortable';
 import { useStore } from '@/store/useStore';
 import { Column } from './Column';
 import { TaskCard } from './TaskCard';
@@ -108,7 +108,7 @@ export const Board: React.FC = () => {
       
       <DndContext sensors={sensors} collisionDetection={closestCenter} onDragStart={handleDragStart} onDragEnd={handleDragEnd} onDragOver={handleDragOver}>
         <div className="board__columns">
-          <SortableContext items={columnsWithTasks.map((c) => c.id)} strategy={verticalListSortingStrategy}>
+          <SortableContext items={columnsWithTasks.map((c) => c.id)} strategy={horizontalListSortingStrategy}>
             {columnsWithTasks.map((column) => (
               <Column key={column.id} column={column} tasks={column.tasks} />
             ))}

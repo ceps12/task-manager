@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
+import { useStore } from '@/store/useStore';
 import { TaskCard } from './TaskCard';
 import { Task, Column as ColumnType } from '@/types';
 import './Column.css';
@@ -97,5 +98,4 @@ export const Column: React.FC<ColumnProps> = ({ column, tasks }) => {
   );
 };
 
-import { useStore } from '@/store/useStore';
 export default Column;
