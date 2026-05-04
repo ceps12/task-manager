@@ -1,36 +1,109 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Task Manager
 
-## Getting Started
+Full-stack task management app with authentication, drag-and-drop boards, and real-time collaboration features.
 
-First, run the development server:
+## ✨ Features
+
+- **Kanban Boards** — Drag-and-drop task management with customizable columns
+- **Real-time Collaboration** — Share boards with team members and work together
+- **Task Management** — Create, edit, and organize tasks with priorities, tags, and due dates
+- **Authentication** — Secure Firebase authentication (Email/Password, Google, GitHub)
+- **Priority System** — High, medium, low priority with visual indicators
+- **Responsive Design** — Works on desktop, tablet, and mobile
+- **Dark Theme** — Beautiful modern UI with dark theme
+
+## 🚀 Live Demo
+
+https://task-manager-ceps12.vercel.app/
+
+## 🛠 Tech Stack
+
+- **Next.js 15** with App Router
+- **TypeScript** for type safety
+- **Tailwind CSS** for styling
+- **Firebase** for authentication and database
+- **@dnd-kit** for drag-and-drop functionality
+- **Zustand** for state management
+- **Framer Motion** for animations
+
+## 📦 Installation
 
 ```bash
+# Clone the repository
+git clone https://github.com/ceps12/task-manager.git
+
+# Navigate to the project directory
+cd task-manager
+
+# Install dependencies
+npm install
+
+# Set up environment variables
+# Create a .env.local file with your Firebase credentials
+NEXT_PUBLIC_FIREBASE_API_KEY=your_api_key
+NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=your_auth_domain
+NEXT_PUBLIC_FIREBASE_PROJECT_ID=your_project_id
+NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET=your_storage_bucket
+NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=your_sender_id
+NEXT_PUBLIC_FIREBASE_APP_ID=your_app_id
+
+# Start the development server
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+
+# Build for production
+npm run build
+
+# Start production server
+npm start
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 📁 Project Structure
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```
+src/
+├── app/
+│   ├── page.tsx              # Main board view
+│   ├── layout.tsx            # Root layout
+│   └── globals.css           # Global styles
+├── components/
+│   └── Board/
+│       ├── Board.tsx         # Main board component
+│       ├── Column.tsx        # Kanban column
+│       └── TaskCard.tsx      # Task card
+├── lib/
+│   └── firebase.ts           # Firebase configuration
+├── store/
+│   └── useStore.ts           # Zustand state store
+└── types/
+    └── index.ts              # TypeScript interfaces
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 🎨 Features Detail
 
-## Learn More
+### Drag-and-Drop Boards
+- Intuitive drag-and-drop interface using @dnd-kit
+- Reorder tasks within and between columns
+- Reorder columns themselves
+- Smooth animations and visual feedback
 
-To learn more about Next.js, take a look at the following resources:
+### Task Management
+- Create tasks with title, description, and priority
+- Add tags for better organization
+- Set due dates with overdue indicators
+- Visual priority indicators (high/medium/low)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Collaboration
+- Share boards with team members
+- Multiple user roles (owner, editor, viewer)
+- Real-time updates (with Firebase)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 🔌 Firebase Setup
 
-## Deploy on Vercel
+1. Create a project at [Firebase Console](https://console.firebase.google.com/)
+2. Enable Authentication (Email/Password, Google, GitHub)
+3. Create Firestore database
+4. Copy configuration to `.env.local`
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 📄 License
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+MIT © ceps12
