@@ -20,6 +20,9 @@ export const Column: React.FC<ColumnProps> = ({ column, tasks }) => {
 
   const [isEditing, setIsEditing] = useState(false);
   const [title, setTitle] = useState(column.title);
+  const [isAddingTask, setIsAddingTask] = useState(false);
+  const [newTaskTitle, setNewTaskTitle] = useState('');
+  const [newTaskPriority, setNewTaskPriority] = useState<'low' | 'medium' | 'high'>('medium');
 
   const style = {
     transform: CSS.Transform.toString(transform),
@@ -31,6 +34,33 @@ export const Column: React.FC<ColumnProps> = ({ column, tasks }) => {
     high: tasks.filter((t) => t.priority === 'high').length,
     medium: tasks.filter((t) => t.priority === 'medium').length,
     low: tasks.filter((t) => t.priority === 'low').length,
+  };
+
+  const handleAddTask = () => {
+    if (!newTaskTitle.trim()) return;
+    const newTask: Task = {
+      id: `task-${Date.now()}`,
+      columnId: column.id,
+      boardId: column.boardId,
+      title: newTaskTitle.trim(),
+      priority: newTaskPriority,
+      tags: [],
+      order: tasks.length,
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+    };
+    useStore.getState().addTask(newTask);
+    setNewTaskTitle('');
+    setNewTaskPriority('medium');
+    setIsAddingTask(false);
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter') handleAddTask();
+    if (e.key === 'Escape') {
+      setIsAddingTask(false);
+      setNewTaskTitle('');
+    }
   };
 
   return (
@@ -90,9 +120,54 @@ export const Column: React.FC<ColumnProps> = ({ column, tasks }) => {
         {tasks.map((task) => (
           <TaskCard key={task.id} task={task} />
         ))}
-        <button className="column__add-task-btn" onClick={() => {}}>
-          + Add Task
-        </button>
+        
+        {isAddingTask ? (
+          <div className="task-card task-card--editing">
+            <input
+              className="column__title-input"
+              value={newTaskTitle}
+              onChange={(e) => setNewTaskTitle(e.target.value)}
+              onKeyDown={handleKeyDown}
+              placeholder="Task title..."
+              autoFocus
+            />
+            <div style={{ display: 'flex', gap: '0.5rem', marginTop: '0.5rem' }}>
+              <select
+                className="column__title-input"
+                value={newTaskPriority}
+                onChange={(e) => setNewTaskPriority(e.target.value as 'low' | 'medium' | 'high')}
+                style={{ flex: 1, fontSize: '0.75rem' }}
+              >
+                <option value="low">Low</option>
+                <option value="medium">Medium</option>
+                <option value="high">High</option>
+              </select>
+            </div>
+            <div style={{ display: 'flex', gap: '0.5rem', marginTop: '0.5rem' }}>
+              <button
+                className="board__add-btn"
+                onClick={handleAddTask}
+                style={{ padding: '0.375rem 0.75rem', fontSize: '0.75rem' }}
+              >
+                Add
+              </button>
+              <button
+                className="column__menu-btn"
+                onClick={() => {
+                  setIsAddingTask(false);
+                  setNewTaskTitle('');
+                }}
+                style={{ padding: '0.375rem 0.75rem' }}
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
+        ) : (
+          <button className="column__add-task-btn" onClick={() => setIsAddingTask(true)}>
+            + Add Task
+          </button>
+        )}
       </div>
     </div>
   );
